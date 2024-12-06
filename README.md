@@ -1,5 +1,10 @@
 # nixos-server
 
+<div align="center">
+    <img src="https://github.com/micartey/nixos-server/actions/workflows/nix.yml/badge.svg" alt="pipeline status">
+</div>
+
+
 ## How to setup?
 
 First, replace the `hardware-configuration.nix` in `/hosts/sirius`.
