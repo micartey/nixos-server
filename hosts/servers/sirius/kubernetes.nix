@@ -6,7 +6,7 @@
 
     clusterInit = true;
     role = "server";
-    tokenFile = config.sops.secrets."k8s/token".path;
+    tokenFile = "/home/k8s/token";
 
     extraFlags = toString [ "--disable local-storage" ];
   };
