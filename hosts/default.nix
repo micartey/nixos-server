@@ -13,7 +13,6 @@
     ../modules/nixos/nix.nix
     ../modules/catppuccin.nix
     ../modules/docker.nix
-    ../modules/sops.nix
   ];
 
   environment.systemPackages = with pkgs; [
