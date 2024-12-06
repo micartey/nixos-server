@@ -5,7 +5,6 @@
     ./i18n.nix
     ./firewall.nix
     ./fonts.nix
-    ./secrets.nix
     ./shell.nix
     ./users.nix
 
