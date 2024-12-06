@@ -14,8 +14,6 @@ You can use the following command:
 sudo cp /etc/nixos/hardware-configuration.nix ./hosts/sirius/hardware-configuration.nix
 ```
 
-## What to change next?
-
 ### Add a public key
 
 Add you public key in `/dots/ssh` and edit `/hosts/users.nix`.
