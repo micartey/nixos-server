@@ -12,7 +12,7 @@
     ];
     trusted-users = [
       "root"
-      "lukas"
+      "sirius"
     ];
   };
 
