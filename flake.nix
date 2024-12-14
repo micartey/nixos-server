@@ -44,11 +44,14 @@
     in
     {
       nixosConfigurations = {
-        
+
         sirius = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputs pkgs-unstable;
+            username = "sirius";
+            hostname = "sirius";
+            domain = "noreply.com";
           };
           modules = [ ./hosts/servers/sirius ];
         };

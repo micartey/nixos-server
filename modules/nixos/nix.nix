@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, username, ... }:
 
 {
   imports = [ inputs.nix-ld.nixosModules.nix-ld ];
@@ -12,7 +12,7 @@
     ];
     trusted-users = [
       "root"
-      "sirius"
+      username
     ];
   };
 

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   users = {
@@ -8,7 +8,7 @@
         openssh.authorizedKeys.keys = [ (builtins.readFile ../dots/ssh/id_ed25519.pub) ];
       };
 
-      sirius = {
+      ${username} = {
         isNormalUser = true;
         description = "Sirius";
         extraGroups = [

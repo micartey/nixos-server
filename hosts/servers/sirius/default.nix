@@ -1,10 +1,12 @@
+{ hostname, ... }:
+
 {
   imports = [
     ../default.nix
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = "sirius";
+  networking.hostName = hostname;
 
   boot = {
     tmp.cleanOnBoot = true;

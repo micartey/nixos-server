@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, username, ... }:
 
 {
   imports = [
@@ -13,8 +13,8 @@
   home = {
     stateVersion = "24.05"; # TODO: upgrade
 
-    username = "sirius";
-    homeDirectory = "/home/sirius";
+    username = username;
+    homeDirectory = "/home/${username}";
   };
 
   catppuccin = {

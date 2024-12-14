@@ -1,13 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, username, domain, ... }:
 
-let
-    username = "sirius";
-in
 {
     programs.git = {
         enable = true;
 
-        userEmail = "sirius@noreply.com";
+        userEmail = "${username}@${domain}";
         userName = username;
 
         delta.enable = true;

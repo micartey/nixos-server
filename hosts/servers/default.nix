@@ -3,6 +3,7 @@
   inputs,
   pkgs,
   pkgs-unstable,
+  username,
   ...
 }:
 
@@ -13,7 +14,7 @@
     ./ssh.nix
   ];
 
-  home-manager.users.sirius = lib.mkDefault (
+  home-manager.users.${username} = lib.mkDefault (
     import ../../home/headless { inherit inputs pkgs pkgs-unstable; }
   );
 
