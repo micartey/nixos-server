@@ -4,8 +4,6 @@
   pkgs,
   pkgs-unstable,
   username,
-  hostname,
-  domain,
   ...
 }:
 
@@ -18,7 +16,7 @@
 
   home-manager.users.${username} = lib.mkDefault (
     import ../../home/headless {
-      inherit inputs pkgs pkgs-unstable username hostname domain;
+      inherit inputs pkgs pkgs-unstable;
     }
   );
 
