@@ -52,7 +52,7 @@
             username = "sirius";
             hostname = "sirius";
             domain = "noreply.com";
-          } // inputs;
+          };
           modules = [ ./hosts/servers/sirius ];
         };
       };
