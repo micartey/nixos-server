@@ -12,7 +12,6 @@
         isNormalUser = true;
         description = "Sirius";
         extraGroups = [
-          "networkmanager"
           "wheel"
           "docker"
           "wireshark"

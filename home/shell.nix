@@ -63,5 +63,6 @@
     pkgs.hyperfine
     pkgs.ffmpeg
     pkgs.imagemagick
+    pkgs.kitty
   ];
 }

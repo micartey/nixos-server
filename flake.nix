@@ -55,6 +55,17 @@
           };
           modules = [ ./hosts/servers/sirius ];
         };
+
+        siriusIso = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs pkgs-unstable;
+            username = "sirius";
+            hostname = "sirius";
+            domain = "noreply.com";
+          };
+          modules = [ ./hosts/iso/configuration.nix ];
+        };
       };
     };
 }
