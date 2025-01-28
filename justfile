@@ -6,4 +6,6 @@ sirius:
 
 iso:
     nix run nixpkgs#nixos-generators -- \
-        --format iso --flake .#siriusIso -o result
+        --format iso \
+        --flake .#siriusIso \
+        -o result
