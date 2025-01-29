@@ -9,10 +9,9 @@ in
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
 
-    # TODO: remove /serius from the path
-    # This is probably not needed because of the hardware-configuration
-    # However, this does also not seem to break it anymore than it already is
-    "${PROJECT_ROOT}/hosts/servers/sirius/default.nix"
+    # Import the server configuration
+    # This entrypoint would be called by the default in sirius which also imports the hardware configuration
+    "${PROJECT_ROOT}/hosts/servers/default.nix"
   ];
 
   # Is that required? Idk, but it's here
