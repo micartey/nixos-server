@@ -39,7 +39,7 @@ To build an ISO file, run the following command:
 just iso
 ```
 
-### Run the ISO file without persisting changes
+### Run the ISO file
 
 > [!WARNING]
 > Changes are not being stored and will be lost upon termination.
