@@ -1,9 +1,11 @@
-{ inputs, pkgs, username, ... }:
+{
+  pkgs,
+  username,
+  ...
+}:
 
 {
-  imports = [ inputs.nix-ld.nixosModules.nix-ld ];
-
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 
   nix.settings = {
     experimental-features = [
@@ -19,8 +21,6 @@
   nixpkgs.config = {
     allowUnfree = true;
   };
-
-  programs.nix-ld.dev.enable = true;
 
   environment.systemPackages = with pkgs; [
     # nix language server

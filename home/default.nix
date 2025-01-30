@@ -11,7 +11,7 @@
 
   programs.home-manager.enable = true;
   home = {
-    stateVersion = "24.05"; # TODO: upgrade
+    stateVersion = "24.11";
 
     username = username;
     homeDirectory = "/home/${username}";
