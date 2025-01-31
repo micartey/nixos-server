@@ -9,8 +9,9 @@
     autosuggestion.enable = true;
 
     initExtra = ''
-      source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-      bindkey "''${key[Up]}" up-line-or-search
+      if [[ $(id -u) -eq 1001 && $(pwd) == "/home/nixos" ]]; then
+          cd ~
+      fi
     '';
   };
 

@@ -14,6 +14,18 @@ in
     "${PROJECT_ROOT}/hosts/servers/default.nix"
   ];
 
+  # programs.zsh.initExtra = ''
+  #   if [[ $(id -u) -ne 1001 ]]; then
+  #       sudo su sirius
+  #   fi
+  # '';
+
   # Is that required? Idk, but it's here
   nixpkgs.hostPlatform = "x86_64-linux";
+
+  # Use serial connection so that we can use the terminal correctly
+  boot.kernelParams = [
+    "console=ttyS0,115200"
+    "console=tty1"
+  ];
 }
