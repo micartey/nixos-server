@@ -42,8 +42,9 @@ just iso
 ### Run the ISO file
 
 > [!WARNING]
-> Changes are not being stored and will be lost upon termination.
-> This is currently only temporary and can be used for testing purposes and to validate the configuration.
+> Edit the `justfile` to change the resources located to the VM.
+> The default configuration is 8 CPUs and 16GB of RAM.
+> Keep in mind that everything is stored in the RAM so you should allocate enough RAM to the VM.
 
 To run the ISO file, run the following command:
 
