@@ -13,9 +13,18 @@ in
   options.services.javaApplication = {
     enable = lib.mkEnableOption "Enable the service.";
 
+    serviceName = lib.mkOption {
+      type = lib.types.str;
+      default = "java-application";
+      description = ''
+        Name of the systemd service. This will be used as the user and service name
+        unless you override the user below.
+      '';
+    };
+
     jarPath = lib.mkOption {
       type = lib.types.str;
-      default = "/opt/myapp/myapp.jar";
+      default = "/etc/opt/myapp/myapp.jar";
       description = "Absolute path to the JAR file.";
     };
 
@@ -51,6 +60,7 @@ in
       description = "User for running the application";
       home = cfg.workingDirectory;
       createHome = true;
+      group = "nogroup";
     };
 
     # Ensure the working directory exists and is owned by the service user.
@@ -62,7 +72,7 @@ in
     };
 
     # Define the systemd service.
-    systemd.services.javaApplication = {
+    systemd.services."${cfg.serviceName}" = {
       description = "Some Java Service";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
