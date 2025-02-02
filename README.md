@@ -27,11 +27,11 @@ You can do this by adding the following entry to one or both arrays:
 
 The DNS is configured in `/modules/dns/cloudflare.nix` and registered in `/hosts/default.nix`.
 
-## Build an ISO file
+## Build an Live-ISO file
 
 > [!WARNING]
-> You can build and deploy the ISO file, however, opon reboot, the system will not boot.
-> There is currently no installation process going on, but the system is fully usable as configured until then.
+> You can build and run the ISO file, however, all changes will be stored in RAM and are not persistent.
+> There is currently no installation process from the iso.
 
 To build an ISO file, run the following command:
 
@@ -49,8 +49,31 @@ just iso
 To run the ISO file, run the following command:
 
 ```bash
-just vm
+just iso-vm
 
 # Inside of the VM, run: sudo su sirius
 # This will switch to the sirius (default non-root user) which also has home-manager configured
+```
+
+## Build Images
+
+You can now also build raw and qcow2 images.
+These images can be used to run the server on a cloud provider.
+Changes are persistent and survive reboots.
+
+```bash
+# Build raw images (file with .img extension)
+# This type is allegedly used on most cloud providers
+sudo just raw
+
+# Build qcow2 images (file with .qcow2 extension)
+sudo just qcow2
+```
+
+### Run Images
+
+```bash
+just run raw-vm
+
+just run qcow-vm
 ```

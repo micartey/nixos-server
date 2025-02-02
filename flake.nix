@@ -52,6 +52,8 @@
           modules = [ ./hosts/servers/sirius ];
         };
 
+        # To create a live ISO image
+        # Cannot be used for persistent installations
         siriusIso = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -61,6 +63,17 @@
             domain = "noreply.com";
           };
           modules = [ ./hosts/iso/configuration.nix ];
+        };
+
+        siriusVM = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs pkgs-unstable;
+            username = "sirius";
+            hostname = "sirius";
+            domain = "noreply.com";
+          };
+          modules = [ ./hosts/img/configuration.nix ];
         };
       };
     };
