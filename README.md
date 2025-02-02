@@ -4,6 +4,26 @@
     <img src="https://github.com/micartey/nixos-server/actions/workflows/nix.yml/badge.svg" alt="pipeline status">
 </div>
 
+## What is packaged?
+
+- Docker (non root)
+- firewall (open ports: 22)
+- fonts and i18n (german keyboard layout)
+- cloudflare DNS
+- catppuccin theme
+- neovim
+- bash, zsh, kitty
+- oh-my-posh
+- git, gh
+- eza, bat, btop, fastfetch, fzf, ripgrep, yazi, zip, unzip, tree, just
+
+### Users
+
+All users have password disabled and can only login via SSH key.
+Make sure to [add a public key](#add-a-public-key).
+
+- sirius (default user)
+- root
 
 ## How to setup?
 

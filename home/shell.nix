@@ -50,7 +50,6 @@
   programs.btop.enable = true;
   programs.fastfetch.enable = true;
   programs.fzf.enable = true;
-  programs.carapace.enable = true;
   programs.ripgrep.enable = true;
   programs.yazi.enable = true;
 
@@ -60,10 +59,6 @@
     pkgs.tree
     pkgs.zip
     pkgs.unzip
-    pkgs.speedtest-cli
-    pkgs.hyperfine
-    pkgs.ffmpeg
-    pkgs.imagemagick
     pkgs.kitty
   ];
 }
