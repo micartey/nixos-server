@@ -33,7 +33,7 @@ Make sure to [add a public key](#add-a-public-key).
 
 ## Setup
 
-> [!TIP]
+> [!NOTE]
 > Skip this section if you want to build an ISO or image.
 > You can continue to the [Add a public key](#add-a-public-key) section.
 
