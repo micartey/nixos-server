@@ -4,7 +4,21 @@
     <img src="https://github.com/micartey/nixos-server/actions/workflows/nix.yml/badge.svg" alt="pipeline status">
 </div>
 
-## What is packaged?
+## Introduction
+
+This repository serves as a template for NixOS server configurations.
+It can either be directly used by cloning and installing it on a server, or by building and using images and deploy them on e.g. AWS.
+Alternatively, you can also build an live-ISO file and run it as a temporary playground or use the images for persistant VMs.
+
+### Pre-configured users
+
+The pre-configured users all have no password and can only be accessed via SSH.
+Make sure to [add a public key](#add-a-public-key).
+
+- sirius (default user)
+- root
+
+### Pre-configured packages
 
 - Docker (non root)
 - firewall (open ports: 22)
@@ -17,20 +31,20 @@
 - git, gh
 - eza, bat, btop, fastfetch, fzf, ripgrep, yazi, zip, unzip, tree, just
 
-### Users
+## Setup
 
-All users have password disabled and can only login via SSH key.
-Make sure to [add a public key](#add-a-public-key).
-
-- sirius (default user)
-- root
-
-## How to setup?
+> [!TIP]
+> Skip this section if you want to build an ISO or image.
+> You can continue to the [Add a public key](#add-a-public-key) section.
 
 First, replace the `hardware-configuration.nix` in `/hosts/sirius`.
 You can use the following command:
 
 ```bash
+# Generate hardware configuration if not already done
+sudo nixos-generate-config
+
+# Use system specific hardware configuration
 sudo cp /etc/nixos/hardware-configuration.nix hosts/sirius/hardware-configuration.nix
 ```
 
@@ -77,6 +91,10 @@ just iso-vm
 
 ## Build Images
 
+> [!NOTE]
+> Images can be run on some cloud providers and on all virtualization software.
+> They are persistent and adjust the storage size dynamically.
+
 You can now also build raw and qcow2 images.
 These images can be used to run the server on a cloud provider.
 Changes are persistent and survive reboots.
@@ -93,7 +111,7 @@ sudo just qcow2
 ### Run Images
 
 ```bash
-just run raw-vm
+just raw-vm
 
-just run qcow-vm
+just qcow-vm
 ```

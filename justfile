@@ -62,7 +62,7 @@ raw-vm:
       -enable-kvm \
       -m 16G \
       -smp cores=8 \
-      -drive file=nixos.raw,if=virtio,format=raw \
+      -drive file=nixos.img,if=virtio,format=raw \
       -boot c \
       -nographic \
       -netdev user,id=net0 \
