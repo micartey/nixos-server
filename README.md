@@ -133,7 +133,7 @@ sudo cp result/tarball/*.tar.xz nixos.tar.xz
 ```
 
 Before you can do anything meaningful, you should remove the following files.
-This step is not necessary as it would also spin to life without it, however, some of these feateres are obsolete or not working at all.
+This step is not necessary as it would also spin to life without it, however, some of these features are obsolete or not working at all.
 
 - /modules/docker.nix
 - /modules/catppuccin.nix
