@@ -105,7 +105,7 @@ Changes are persistent and survive reboots.
 sudo just raw
 
 # Build qcow2 images (file with .qcow2 extension)
-sudo just qcow2
+sudo just qcow
 ```
 
 ### Run Images
