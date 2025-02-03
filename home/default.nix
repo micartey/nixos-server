@@ -1,4 +1,9 @@
-{ inputs, username, ... }:
+{
+  inputs,
+  username,
+  nixos-version,
+  ...
+}:
 
 {
   imports = [
@@ -11,7 +16,7 @@
 
   programs.home-manager.enable = true;
   home = {
-    stateVersion = "24.11";
+    stateVersion = nixos-version;
 
     username = username;
     homeDirectory = "/home/${username}";

@@ -4,6 +4,7 @@
   pkgs,
   pkgs-unstable,
   username,
+  nixos-version,
   ...
 }:
 
@@ -16,7 +17,12 @@
 
   home-manager.users.${username} = lib.mkDefault (
     import ../../home/headless {
-      inherit inputs pkgs pkgs-unstable;
+      inherit
+        inputs
+        pkgs
+        pkgs-unstable
+        nixos-version
+        ;
     }
   );
 

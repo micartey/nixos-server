@@ -32,6 +32,12 @@
     }@inputs:
     let
       system = "x86_64-linux";
+      nixos-version = "21.11";
+
+      username = "sirius";
+      hostname = "sirius";
+      domain = "noreply.com";
+
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
@@ -44,10 +50,14 @@
         sirius = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs pkgs-unstable;
-            username = "sirius";
-            hostname = "sirius";
-            domain = "noreply.com";
+            inherit
+              inputs
+              pkgs-unstable
+              nixos-version
+              username
+              hostname
+              domain
+              ;
           };
           modules = [ ./hosts/servers/sirius ];
         };
@@ -57,10 +67,15 @@
         siriusIso = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs pkgs-unstable;
-            username = "sirius";
-            hostname = "sirius";
-            domain = "noreply.com";
+            inherit
+              inputs
+              pkgs-unstable
+              nixos-version
+              username
+              hostname
+              domain
+              system
+              ;
           };
           modules = [ ./hosts/iso/configuration.nix ];
         };
@@ -68,10 +83,15 @@
         siriusVM = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs pkgs-unstable;
-            username = "sirius";
-            hostname = "sirius";
-            domain = "noreply.com";
+            inherit
+              inputs
+              pkgs-unstable
+              nixos-version
+              username
+              hostname
+              domain
+              system
+              ;
           };
           modules = [ ./hosts/img/configuration.nix ];
         };

@@ -1,11 +1,12 @@
 {
   pkgs,
   username,
+  nixos-version,
   ...
 }:
 
 {
-  system.stateVersion = "24.11";
+  system.stateVersion = nixos-version;
 
   nix.settings = {
     experimental-features = [
