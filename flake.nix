@@ -95,6 +95,22 @@
           };
           modules = [ ./hosts/img/configuration.nix ];
         };
+
+        siriusDocker = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit
+              inputs
+              pkgs-unstable
+              nixos-version
+              username
+              hostname
+              domain
+              system
+              ;
+          };
+          modules = [ ./hosts/docker/configuration.nix ];
+        };
       };
     };
 }

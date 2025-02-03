@@ -5,3 +5,4 @@ result
 *.qcow2
 *.iso
 *.img
+*.tar.xz

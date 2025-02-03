@@ -115,3 +115,49 @@ just raw-vm
 
 just qcow-vm
 ```
+
+## Create Docker Image
+
+It is also possible to create a docker image.
+However, there is a lot of overhead and docker e.g. woudln't work.
+For the sake of completeness, here is how to create a docker image:
+
+```bash
+nix run github:nix-community/nixos-generators -- \
+    --format docker \
+    --flake .#siriusDocker \
+    -o result
+
+# Copy the tarball to the root directory
+sudo cp result/tarball/*.tar.xz nixos.tar.xz
+```
+
+Before you can do anything meaningful, you should remove the following files.
+This step is not necessary as it would also spin to life without it, however, some of these feateres are obsolete or not working at all.
+
+- /modules/docker.nix
+- /modules/catppuccin.nix
+- /modules/dns
+- /home/git.nix
+- /hosts/fonts.nix
+- /hosts/shell.nix
+- /hosts/i18n.nix
+
+### Run Docker Image
+
+```bash
+docker import nixos.tar.xz nixos-server:latest
+docker run --privileged -it --rm nixos-server:latest /init
+```
+
+You can connect to the docker container via one of the following methods:
+
+```bash
+docker exec -it <container-id> /run/current-system/sw/bin/bash
+
+# SSH requires one to open the port 22
+ssh -o StrictHostKeychecking=no -p 2222:22 sirius@localhost
+```
+
+SSH might take a few tens of seconds to start up.
+Be patient when using that method.
