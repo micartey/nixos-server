@@ -61,7 +61,7 @@ You can do this by adding the following entry to one or both arrays:
 
 The DNS is configured in `/modules/dns/cloudflare.nix` and registered in `/hosts/default.nix`.
 
-## Build an Live-ISO file
+## Build Live-ISO file
 
 > [!WARNING]
 > You can build and run the ISO file, however, all changes will be stored in RAM and are not persistent.
@@ -73,9 +73,9 @@ To build an ISO file, run the following command:
 just iso
 ```
 
-### Run the ISO file
+### Run Live-ISO file
 
-> [!WARNING]
+> [!NOTE]
 > Edit the `justfile` to change the resources located to the VM.
 > The default configuration is 8 CPUs and 16GB of RAM.
 > Keep in mind that everything is stored in the RAM so you should allocate enough RAM to the VM.
@@ -89,7 +89,7 @@ just iso-vm
 # This will switch to the sirius (default non-root user) which also has home-manager configured
 ```
 
-## Build Images
+## Build Raw Images
 
 > [!NOTE]
 > Images can be run on some cloud providers and on all virtualization software.
@@ -116,7 +116,13 @@ just raw-vm
 just qcow-vm
 ```
 
-## Create Docker Image
+## Build Docker Image
+
+> [!WARNING]
+> Docker images of this kind should never be used for containers.
+> Containers are meant to be small, lightweight and modular which also means one container per service.
+> An entire OS in a container is a bad practice and should be avoided.
+> Furthermore, containers created from this image need to be run in privileged mode which is a security risk.
 
 It is also possible to create a docker image.
 However, there is a lot of overhead and docker e.g. woudln't work.
@@ -142,21 +148,22 @@ This step is not necessary as it would also spin to life without it, however, so
 - /hosts/fonts.nix
 - /hosts/shell.nix
 - /hosts/i18n.nix
+- ...
 
 ### Run Docker Image
 
 ```bash
 docker import nixos.tar.xz nixos-server:latest
-docker run --privileged -it --rm nixos-server:latest /init
+docker run --privileged -it -p 2222:22 --rm nixos-server:latest /init
 ```
 
 You can connect to the docker container via one of the following methods:
 
 ```bash
-docker exec -it <container-id> /run/current-system/sw/bin/bash
+docker exec -it $(docker ps | grep nixos-server:latest | awk '{ print $1 }') /run/current-system/sw/bin/bash
 
 # SSH requires one to open the port 22
-ssh -o StrictHostKeychecking=no -p 2222:22 sirius@localhost
+ssh -o StrictHostKeychecking=no -p 2222 sirius@localhost
 ```
 
 SSH might take a few tens of seconds to start up.

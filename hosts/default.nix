@@ -7,6 +7,7 @@
     ./fonts.nix
     ./shell.nix
     ./users.nix
+    ./traceroute.nix
 
     ../modules/dns/cloudflare.nix
     ../modules/nixos/home-manager.nix
