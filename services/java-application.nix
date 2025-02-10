@@ -6,31 +6,26 @@
 }:
 
 let
-  # Short alias for the list of java application service definitions.
-  javaServices = config.services.javaApplication.services;
+  getWithDefault = value: def: if value == null then def else value;
+
+  # For convenience, define default values.
+  defaultJavaPackage = pkgs.openjdk11;
 in
 {
   options.services.javaApplication = {
     enable = lib.mkEnableOption "Enable all Java application services.";
 
-    # This option is a list of service definitions.
     services = lib.mkOption {
       type = lib.types.listOf (
-        lib.types.attrs "javaService" {
-          # Optional per-service enable flag (default is true if not set).
+        lib.types.attrs
+        // {
           enable = lib.types.optional lib.types.bool;
-          # Service name used for systemd, logs, etc.
           serviceName = lib.types.str;
-          # Absolute path to the JAR file.
           jarPath = lib.types.str;
-          # The Unix user that will run the service.
           user = lib.types.str;
-          # Working directory for the application.
           workingDirectory = lib.types.str;
-          # Port to open in the firewall.
-          port = lib.types.int;
-          # Java package to use (for example, pkgs.openjdk17).
-          javaPackage = lib.types.package;
+          port = lib.types.optional lib.types.int;
+          javaPackage = lib.types.optional lib.types.package;
         }
       );
       default = [ ];
@@ -39,7 +34,8 @@ in
   };
 
   config = lib.mkIf config.services.javaApplication.enable {
-    # For each service, create a system user.
+
+    # Create a system user for each service.
     users.users = lib.foldl' (
       acc: s:
       if (s.enable or true) then
@@ -55,7 +51,7 @@ in
         }
       else
         acc
-    ) { } javaServices;
+    ) { } config.services.javaApplication.services;
 
     # Ensure the working directories exist.
     system.activationScripts = lib.foldl' (
@@ -72,7 +68,7 @@ in
         }
       else
         acc
-    ) { } javaServices;
+    ) { } config.services.javaApplication.services;
 
     # Define a systemd service for each Java application.
     systemd.services = lib.foldl' (
@@ -87,18 +83,22 @@ in
             serviceConfig = {
               User = s.user;
               WorkingDirectory = s.workingDirectory;
-              ExecStart = "${s.javaPackage}/bin/java -jar ${s.jarPath}";
+              # Use the optional attributes with defaults.
+              ExecStart = "${(s.javaPackage or defaultJavaPackage)}/bin/java -jar ${s.jarPath}";
               Restart = "on-failure";
             };
           };
         }
       else
         acc
-    ) { } javaServices;
+    ) { } config.services.javaApplication.services;
 
     # Open the firewall ports for all enabled services.
     networking.firewall.allowedTCPPorts = lib.concatLists (
-      map (s: if (s.enable or true) then [ s.port ] else [ ]) javaServices
+      map (
+        # Filter out services that are either disabled or have no port defined
+        s: if ((s.enable or true) && (s.port or null) != null) then s.port else [ ]
+      ) config.services.javaApplication.services
     );
   };
 }
