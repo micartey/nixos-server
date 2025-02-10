@@ -6,8 +6,6 @@
 }:
 
 let
-  getWithDefault = value: def: if value == null then def else value;
-
   # For convenience, define default values.
   defaultJavaPackage = pkgs.openjdk11;
 in
