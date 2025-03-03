@@ -4,6 +4,17 @@
     <img src="https://github.com/micartey/nixos-server/actions/workflows/nix.yml/badge.svg" alt="pipeline status">
 </div>
 
+- [Introduction](#introduction)
+- [Setup](#setup)
+  - [Add a public key](#add-a-public-key)
+  - [Configure DNS](#configure-dns)
+- [Build Live-ISO file](#build-live-iso-file)
+  - [Run Live-ISO file](#run-live-iso-file)
+- [Build Raw Images](#build-raw-images)
+  - [Run Images](#run-images)
+- [Build Docker Image](#build-docker-image)
+  - [Run Docker Image](#run-docker-image)
+
 ## Introduction
 
 This repository serves as a template for NixOS server configurations.
@@ -45,7 +56,10 @@ You can use the following command:
 sudo nixos-generate-config
 
 # Use system specific hardware configuration
-sudo cp /etc/nixos/hardware-configuration.nix hosts/sirius/hardware-configuration.nix
+sudo cp /etc/nixos/hardware-configuration.nix ./hosts/sirius/hardware-configuration.nix
+
+# Sometimes important information for the boot-loader is inside the configuration.nix file
+# In that case you need to copy that information to hardware-configuration.nix
 ```
 
 ### Add a public key

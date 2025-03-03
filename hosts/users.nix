@@ -11,6 +11,8 @@
       ${username} = {
         isNormalUser = true;
         description = "Sirius";
+        # The password should only be usable from (VNC) cloud terminal
+        initialPassword = "notnagel";
         extraGroups = [
           "wheel"
           "docker"
