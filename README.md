@@ -9,11 +9,8 @@
   - [Add a public key](#add-a-public-key)
   - [Configure DNS](#configure-dns)
 - [Build Live-ISO file](#build-live-iso-file)
-  - [Run Live-ISO file](#run-live-iso-file)
 - [Build Raw Images](#build-raw-images)
-  - [Run Images](#run-images)
 - [Build Docker Image](#build-docker-image)
-  - [Run Docker Image](#run-docker-image)
 
 ## Introduction
 
