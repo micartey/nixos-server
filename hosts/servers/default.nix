@@ -3,8 +3,7 @@
   inputs,
   pkgs,
   pkgs-unstable,
-  username,
-  nixos-version,
+  meta,
   ...
 }:
 
@@ -15,13 +14,13 @@
     ./ssh.nix
   ];
 
-  home-manager.users.${username} = lib.mkDefault (
+  home-manager.users.${meta.username} = lib.mkDefault (
     import ../../home/headless {
       inherit
         inputs
         pkgs
         pkgs-unstable
-        nixos-version
+        meta
         ;
     }
   );

@@ -1,7 +1,6 @@
 {
   inputs,
-  username,
-  nixos-version,
+  meta,
   ...
 }:
 
@@ -16,10 +15,10 @@
 
   programs.home-manager.enable = true;
   home = {
-    stateVersion = nixos-version;
+    stateVersion = meta.nixos-version;
 
-    username = username;
-    homeDirectory = "/home/${username}";
+    username = meta.username;
+    homeDirectory = "/home/${meta.username}";
   };
 
   catppuccin = {

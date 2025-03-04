@@ -1,7 +1,6 @@
 {
   pkgs,
-  username,
-  domain,
+  meta,
   ...
 }:
 
@@ -9,15 +8,15 @@
   programs.git = {
     enable = true;
 
-    userEmail = "${username}@${domain}";
-    userName = username;
+    userEmail = "${meta.username}@${meta.domain}";
+    userName = meta.username;
 
     delta.enable = true;
 
     extraConfig = {
       color.ui = true;
       core.editor = "${pkgs.neovim}/bin/nvim";
-      github.user = username;
+      github.user = meta.username;
       push.autoSetupRemote = true;
       pull.rebase = true;
       safe.directory = "/nixos";

@@ -1,12 +1,11 @@
 {
   pkgs,
-  username,
-  nixos-version,
+  meta,
   ...
 }:
 
 {
-  system.stateVersion = nixos-version;
+  system.stateVersion = meta.nixos-version;
 
   nix.settings = {
     experimental-features = [
@@ -15,7 +14,7 @@
     ];
     trusted-users = [
       "root"
-      username
+      meta.username
     ];
   };
 

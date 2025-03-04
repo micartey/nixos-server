@@ -1,4 +1,4 @@
-{ hostname, lib, ... }:
+{ meta, lib, ... }:
 
 {
   imports = [
@@ -6,7 +6,7 @@
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = lib.mkForce hostname;
+  networking.hostName = lib.mkForce meta.hostname;
 
   boot = {
     tmp.cleanOnBoot = true;

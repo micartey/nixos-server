@@ -1,10 +1,7 @@
 {
   inputs,
   pkgs-unstable,
-  username,
-  nixos-version,
-  hostname,
-  domain,
+  meta,
   ...
 }:
 
@@ -16,10 +13,7 @@
       inherit
         inputs
         pkgs-unstable
-        username
-        nixos-version
-        hostname
-        domain
+        meta
         ;
     };
     useGlobalPkgs = true;

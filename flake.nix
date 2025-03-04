@@ -10,6 +10,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix.url = "github:Mic92/sops-nix";
+
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,11 +34,16 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      nixos-version = "21.11";
 
-      username = "sirius";
-      hostname = "sirius";
-      domain = "noreply.com";
+      meta = {
+        nixos-version = "21.11";
+
+        username = "sirius";
+        initialPassword = "notnagel"; # The password should only be usable from (VNC) cloud terminal
+
+        hostname = "sirius";
+        domain = "noreply.com";
+      };
 
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
@@ -53,10 +60,7 @@
             inherit
               inputs
               pkgs-unstable
-              nixos-version
-              username
-              hostname
-              domain
+              meta
               ;
           };
           modules = [ ./hosts/servers/sirius ];
@@ -70,10 +74,7 @@
             inherit
               inputs
               pkgs-unstable
-              nixos-version
-              username
-              hostname
-              domain
+              meta
               system
               ;
           };
@@ -86,10 +87,7 @@
             inherit
               inputs
               pkgs-unstable
-              nixos-version
-              username
-              hostname
-              domain
+              meta
               system
               ;
           };
@@ -102,10 +100,7 @@
             inherit
               inputs
               pkgs-unstable
-              nixos-version
-              username
-              hostname
-              domain
+              meta
               system
               ;
           };
