@@ -8,6 +8,7 @@
 - [Setup](#setup)
   - [Add a public key](#add-a-public-key)
   - [Configure DNS](#configure-dns)
+  - [Configure Traefik](#configure-traefik)
 - [Build Live-ISO file](#build-live-iso-file)
 - [Build Raw Images](#build-raw-images)
 - [Build Docker Image](#build-docker-image)
@@ -72,6 +73,12 @@ You can do this by adding the following entry to one or both arrays:
 ### Configure DNS
 
 The DNS is configured in `/modules/dns/cloudflare.nix` and registered in `/hosts/default.nix`.
+Cloudflare uses the following IPv4 addresses:
+
+```plaintext
+1.1.1.1
+1.0.0.1
+```
 
 ### Configure Traefik
 
