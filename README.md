@@ -28,6 +28,7 @@ Make sure to [add a public key](#add-a-public-key).
 
 ### Pre-configured packages
 
+- Traefik (reverse proxy: 80, 443, 8080)
 - Docker (non root)
 - firewall (open ports: 22)
 - fonts and i18n (german keyboard layout)
@@ -71,6 +72,19 @@ You can do this by adding the following entry to one or both arrays:
 ### Configure DNS
 
 The DNS is configured in `/modules/dns/cloudflare.nix` and registered in `/hosts/default.nix`.
+
+### Configure Traefik
+
+Traefik is configured in `/hosts/server/traefik.nix` and registered in `/hosts/server/default.nix`.
+You need to edit the `secrets/secrets.yaml` file and add your cloudflare email and API key.
+
+```yaml
+cloudflare:
+  email: <my_email>
+  api_key: <global_api_key>
+```
+
+For a more precise guide on how to setup sops, see [here](https://github.com/micartey/nixos/tree/master/secrets).
 
 ## Build Live-ISO file
 

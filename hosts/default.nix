@@ -11,6 +11,7 @@
 
     ../modules/dns/cloudflare.nix
     ../modules/nixos/home-manager.nix
+    ../modules/security/sops.nix
     ../modules/nixos/nix.nix
     ../modules/catppuccin.nix
     ../modules/docker.nix

@@ -11,6 +11,8 @@
   imports = [
     ../default.nix
 
+    ./secret.nix
+    ./traefik.nix
     ./ssh.nix
   ];
 

@@ -41,7 +41,7 @@
         username = "sirius";
         initialPassword = "notnagel"; # The password should only be usable from (VNC) cloud terminal
 
-        hostname = "sirius";
+        hostname = "nixos-server";
         domain = "noreply.com";
       };
 
