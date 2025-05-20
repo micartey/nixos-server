@@ -7,3 +7,4 @@
 ## TODO: Pi-4 Emulation
 
 - https://dev.to/corusm/kvmqemu-raspberry-pi-arm-vm-520
+- https://www.youtube.com/watch?v=A2A0Zoyy3p0
