@@ -1,7 +1,7 @@
 {
   pkgs,
-  meta,
   inputs,
+  system,
   lib,
   ...
 }:
@@ -17,16 +17,29 @@ in
     "${PROJECT_ROOT}/hosts/servers/default.nix"
   ];
 
-  # Lets enforce FAT filesystem type
-  fileSystems."/" = lib.mkForce {
-    device = "/dev/disk/by-uuid/59cf2dfd-df62-4980-9954-312f1a6545db";
-    fsType = "vfat";
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    autoResize = true;
+    fsType = "ext4";
   };
+
+  nixpkgs.hostPlatform = system;
+
+  boot.growPartition = true;
+  boot.loader.grub.device = lib.mkDefault "nodev";
+
+  # Use serial connection so that we can use the terminal correctly
+  boot.kernelParams = [
+    "console=ttyS0,115200"
+    "console=tty1"
+  ];
+
+  boot.loader.grub.efiSupport = lib.mkDefault true;
+  boot.loader.grub.efiInstallAsRemovable = lib.mkDefault true;
+  boot.loader.timeout = 0;
 
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom
   ];
-
-  system.stateVersion = meta.nixos-version;
 }

@@ -1,7 +1,8 @@
 wiki
 
 # Building Images etc.
-result
+result*
+
 *.qcow2
 *.iso
 *.img

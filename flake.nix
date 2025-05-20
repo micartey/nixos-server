@@ -124,6 +124,7 @@
               inputs
               ;
 
+            system = "aarch64-linux";
             pkgs-unstable = pkgs-unstable-arm;
 
             meta = meta // {
