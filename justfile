@@ -67,3 +67,14 @@ raw-vm:
       -nographic \
       -netdev user,id=net0 \
       -device virtio-net-pci,netdev=net0
+
+# This job can only be run with ARM emulation enabeled
+pi:
+    nix run github:nix-community/nixos-generators -- \
+        --format raw \
+        --flake .#siriusPI \
+        -o result-pi
+
+    sudo cp result-pi/*.img nixos-pi.img
+    sudo chown $(id -u):$(id -g) nixos-pi.img
+    sudo chmod 600 nixos-pi.img

@@ -4,6 +4,7 @@
 {
   lib,
   modulesPath,
+  meta,
   ...
 }:
 
@@ -47,35 +48,35 @@
   # networking.interfaces.ens18.useDHCP = lib.mkDefault true;
 
   networking = {
-    defaultGateway = {
-      address = "80.75.218.1";
-      interface = "ens18";
-    };
+    # defaultGateway = {
+    #   address = "80.75.218.1";
+    #   interface = "ens18";
+    # };
 
-    interfaces.ens18 = {
-      useDHCP = false;
+    # interfaces.ens18 = {
+    #   useDHCP = false;
 
-      ipv4 = {
-        addresses = [
-          {
-            address = "80.75.218.8";
-            prefixLength = 24;
-          }
-        ];
+    #   ipv4 = {
+    #     addresses = [
+    #       {
+    #         address = "80.75.218.8";
+    #         prefixLength = 24;
+    #       }
+    #     ];
 
-        routes = [
-          {
-            address = "0.0.0.0";
-            prefixLength = 0;
-            via = "80.75.218.1";
-          }
-        ];
-      };
-    };
+    #     routes = [
+    #       {
+    #         address = "0.0.0.0";
+    #         prefixLength = 0;
+    #         via = "80.75.218.1";
+    #       }
+    #     ];
+    #   };
+    # };
   };
 
   # Enable networking
   networking.networkmanager.enable = true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault meta.system;
 }
