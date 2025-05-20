@@ -21,6 +21,11 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     catppuccin.url = "github:catppuccin/nix";
 
+    # Needed for pi
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+    };
+
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
@@ -33,20 +38,19 @@
       ...
     }@inputs:
     let
-      system = "x86_64-linux";
-
       meta = {
         nixos-version = "21.11";
+        system = "x86_64-linux";
 
         username = "sirius";
         initialPassword = "notnagel"; # The password should only be usable from (VNC) cloud terminal
 
-        hostname = "nixos-server";
+        hostname = "sirius"; # Only useful for Raspberry PIs
         domain = "noreply.com";
       };
 
       pkgs-unstable = import nixpkgs-unstable {
-        inherit system;
+        system = meta.system;
         config.allowUnfree = true;
         overlays = [ nixgl.overlay ];
       };
@@ -55,7 +59,7 @@
       nixosConfigurations = {
 
         sirius = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = meta.system;
           specialArgs = {
             inherit
               inputs
@@ -69,42 +73,57 @@
         # To create a live ISO image
         # Cannot be used for persistent installations
         siriusIso = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = meta.system;
           specialArgs = {
             inherit
               inputs
               pkgs-unstable
               meta
-              system
               ;
           };
           modules = [ ./hosts/iso/configuration.nix ];
         };
 
         siriusVM = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = meta.system;
           specialArgs = {
             inherit
               inputs
               pkgs-unstable
               meta
-              system
               ;
           };
           modules = [ ./hosts/img/configuration.nix ];
         };
 
         siriusDocker = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = meta.system;
           specialArgs = {
             inherit
               inputs
               pkgs-unstable
               meta
-              system
               ;
           };
           modules = [ ./hosts/docker/configuration.nix ];
+        };
+
+        # We need to override and "inject" quite a bit
+        # Therefore this job differs from the others
+        # To be able to run this job you'll need to enable arm emulation on your device
+        siriusPI = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            inherit inputs;
+
+            system = "aarch64-linux";
+            # pkgs-unstable = pkgs-unstable-arm;
+
+            meta = meta // {
+              system = "aarch64-linux";
+            };
+          };
+          modules = [ ./hosts/pi/configuration.nix ];
         };
       };
     };

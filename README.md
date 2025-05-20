@@ -12,6 +12,7 @@
 - [Build Live-ISO file](#build-live-iso-file)
 - [Build Raw Images](#build-raw-images)
 - [Build Docker Image](#build-docker-image)
+- [Build Raspberry Pi Image](#build-raspberry-pi-image)
 
 ## Introduction
 
@@ -63,12 +64,14 @@ sudo cp /etc/nixos/hardware-configuration.nix ./hosts/sirius/hardware-configurat
 
 ### Add a public key
 
-Add you public key in `/dots/ssh` and edit `/hosts/users.nix`.
+Add your public key in `/dots/ssh` and edit `/hosts/users.nix`.
 You can do this by adding the following entry to one or both arrays:
 
 ```nix
 (builtins.readFile ../dots/ssh/<my_key>.pub)
 ```
+
+I added my own public key as a placeholder - **you should remove it**
 
 ### Configure DNS
 
@@ -95,23 +98,16 @@ For a more precise guide on how to setup sops, see [here](https://github.com/mic
 
 ## Build Live-ISO file
 
-> [!WARNING]
-> You can build and run the ISO file, however, all changes will be stored in RAM and are not persistent.
-> There is currently no installation process from the iso.
-
+Live-ISOs are quite usefull if you want a throwaway or demo system that just exists in your RAM.
 To build an ISO file, run the following command:
 
 ```bash
-just iso
+sudo just iso
 ```
 
 ### Run Live-ISO file
 
-> [!NOTE]
-> Edit the `justfile` to change the resources located to the VM.
-> The default configuration is 8 CPUs and 16GB of RAM.
-> Keep in mind that everything is stored in the RAM so you should allocate enough RAM to the VM.
-
+Before running the ISO you might want to make prior adjustments to its resources in the justfile.
 To run the ISO file, run the following command:
 
 ```bash
@@ -123,17 +119,13 @@ just iso-vm
 
 ## Build Raw Images
 
-> [!NOTE]
-> Images can be run on some cloud providers and on all virtualization software.
-> They are persistent and adjust the storage size dynamically.
-
-You can now also build raw and qcow2 images.
-These images can be used to run the server on a cloud provider.
+You can also build raw and qcow2 images.
+These images can be used to run the output on a cloud provider.
 Changes are persistent and survive reboots.
 
 ```bash
 # Build raw images (file with .img extension)
-# This type is allegedly used on most cloud providers
+# This type is allegedly supported on most cloud providers such as AWS
 sudo just raw
 
 # Build qcow2 images (file with .qcow2 extension)
@@ -141,6 +133,8 @@ sudo just qcow
 ```
 
 ### Run Images
+
+You can run raw and qcow images with the following commands:
 
 ```bash
 just raw-vm
@@ -157,7 +151,7 @@ just qcow-vm
 > Furthermore, containers created from this image need to be run in privileged mode which is a security risk.
 
 It is also possible to create a docker image.
-However, there is a lot of overhead and docker e.g. woudln't work.
+However, there is a lot of overhead and docker in docker e.g. doesn't work out of the box.
 For the sake of completeness, here is how to create a docker image:
 
 ```bash
@@ -200,3 +194,49 @@ ssh -o StrictHostKeychecking=no -p 2222 sirius@localhost
 
 SSH might take a few tens of seconds to start up.
 Be patient when using that method.
+
+## Build Raspberry Pi Image
+
+> [!WARNING]
+> **This is a WIP**
+>
+> Many features are not usable yet, most notably:
+> - gpio
+> - pwm
+> - bluetooth
+> - wifi
+>
+> The following guide was of big help:
+> https://jcd.pub/2025/01/30/nixos-on-raspi-in-2025/
+
+To even attempt to build this on you current machine, you need to enable arm support:
+
+```nix
+boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+```
+
+Only then you can proceed with building the pi sd-image.
+
+```bash
+sudo just pi
+```
+
+### Flash to SD-Card
+
+```bash
+nix-shell -p caligula
+caligula burn nixos-pi.img
+```
+
+Small note: You can quit during _Verify_ as it takes just time and read cycles
+
+### Build on remote host
+
+The following snipped allows you to build any changes on your host and push it to the PI.
+That implies it is already in the network (through Ethernet e.g.) and has the `sirius.local` hostname.
+Lastly, you need to add your user to the `trusted-users` in the pi's `configuration.nix`.
+Default tursted users are: `daniel` and `root`
+
+```bash
+nixos-rebuild switch --flake .#siriusPI --target-host sirius@sirius.local --use-remote-sudo --impure
+```

@@ -67,3 +67,11 @@ raw-vm:
       -nographic \
       -netdev user,id=net0 \
       -device virtio-net-pci,netdev=net0
+
+# This job can only be run with ARM emulation enabeled
+pi:
+    nix build '.#nixosConfigurations.siriusPI.config.system.build.sdImage' --impure
+
+    sudo cp result/sd-image/*.img nixos-pi.img
+    sudo chown $(id -u):$(id -g) nixos-pi.img
+    sudo chmod 600 nixos-pi.img

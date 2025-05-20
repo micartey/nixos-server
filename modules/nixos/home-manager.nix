@@ -1,6 +1,5 @@
 {
   inputs,
-  pkgs-unstable,
   meta,
   ...
 }:
@@ -12,7 +11,6 @@
     extraSpecialArgs = {
       inherit
         inputs
-        pkgs-unstable
         meta
         ;
     };
