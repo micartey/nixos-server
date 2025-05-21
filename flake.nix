@@ -45,7 +45,7 @@
         username = "sirius";
         initialPassword = "notnagel"; # The password should only be usable from (VNC) cloud terminal
 
-        hostname = "sirius.local";
+        hostname = "sirius"; # Only useful for Raspberry PIs
         domain = "noreply.com";
       };
 

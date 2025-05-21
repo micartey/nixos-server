@@ -237,5 +237,5 @@ That implies it is already in the network (through Ethernet e.g.) and has the `s
 Lastly, you need to add your user to the `trusted-users` in the pi's `configuration.nix`.
 
 ```bash
-nixos-rebuild switch --flake .#siriusPI --target-host sirius.local --use-remote-sudo
+nixos-rebuild switch --flake .#siriusPI --target-host sirius@sirius.local --use-remote-sudo --impure
 ```

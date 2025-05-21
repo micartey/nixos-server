@@ -2,7 +2,7 @@
 
 {
   services.traefik = {
-    enable = true;
+    enable = false;
 
     environmentFiles = [ (config.sops.templates."traefik/env".path) ];
 

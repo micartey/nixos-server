@@ -1,9 +1,9 @@
 {
   pkgs,
-  inputs,
   system,
   modulesPath,
   lib,
+  meta,
   ...
 }:
 
@@ -16,14 +16,19 @@ in
   imports = [
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
     "${PROJECT_ROOT}/hosts/servers/default.nix"
+    "${PROJECT_ROOT}/hosts/pi/avahi.nix"
   ];
+
+  networking.hostName = lib.mkForce meta.hostname;
 
   nixpkgs.hostPlatform = system;
 
-
   nix.settings = {
     # This is needed to allow building remotely
-    trusted-users = [ "daniel" "root" ];
+    trusted-users = [
+      "daniel"
+      "root"
+    ];
 
     # The nix-community cache has aarch64 builds of unfree packages,
     # which aren't in the normal cache
