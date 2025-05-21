@@ -8,3 +8,14 @@
 
 - https://dev.to/corusm/kvmqemu-raspberry-pi-arm-vm-520
 - https://www.youtube.com/watch?v=A2A0Zoyy3p0
+
+```bash
+nix-build '<nixpkgs>' --no-out-link \
+    -A OVMF.fd \
+    -A OVMFFull.fd \
+    -A libvirt \
+    -A virt-manager \
+    -A spice-vdagent \
+    -A qemu_kvm \
+    --system aarch64-linux
+```
