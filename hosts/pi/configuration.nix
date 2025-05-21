@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   system,
+  modulesPath,
   lib,
   ...
 }:
@@ -13,20 +14,30 @@ let
 in
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
     "${PROJECT_ROOT}/hosts/servers/default.nix"
   ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    autoResize = true;
-    fsType = "ext4";
-  };
-
   nixpkgs.hostPlatform = system;
 
-  boot.growPartition = true;
-  boot.loader.grub.device = lib.mkDefault "nodev";
+
+  nix.settings = {
+    # This is needed to allow building remotely
+    trusted-users = [ "daniel" ];
+
+    # The nix-community cache has aarch64 builds of unfree packages,
+    # which aren't in the normal cache
+    substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
+  # These options make the sd card image build faster
+  boot.supportedFilesystems.zfs = lib.mkForce false;
+  sdImage.compressImage = false;
 
   # Use serial connection so that we can use the terminal correctly
   boot.kernelParams = [
@@ -34,12 +45,12 @@ in
     "console=tty1"
   ];
 
-  boot.loader.grub.efiSupport = lib.mkDefault true;
-  boot.loader.grub.efiInstallAsRemovable = lib.mkDefault true;
-  boot.loader.timeout = 0;
-
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom
   ];
+
+  hardware.enableRedistributableFirmware = true;
+
+  security.sudo.wheelNeedsPassword = false;
 }

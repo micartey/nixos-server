@@ -12,6 +12,7 @@
 - [Build Live-ISO file](#build-live-iso-file)
 - [Build Raw Images](#build-raw-images)
 - [Build Docker Image](#build-docker-image)
+- [Build Raspberry Pi Image](#build-raspberry-pi-image)
 
 ## Introduction
 
@@ -200,3 +201,32 @@ ssh -o StrictHostKeychecking=no -p 2222 sirius@localhost
 
 SSH might take a few tens of seconds to start up.
 Be patient when using that method.
+
+## Build Raspberry Pi Image
+
+> [!CAUTION]
+> **This is a WIP**
+>
+> Many features are not usable yet but it boots and you can use docker etc.
+>
+> The following guide was of big help:
+> https://jcd.pub/2025/01/30/nixos-on-raspi-in-2025/
+
+To even attempt to build this on you current machine, you need to enable arm support on your host:
+
+```nix
+boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+```
+
+Only then you can proceed with building the pi sd-image.
+
+```bash
+sudo just pi
+```
+
+### Flash to SD-Card
+
+```bash
+nix-shell -p caligula
+caligula burn nixos-pi.img
+```

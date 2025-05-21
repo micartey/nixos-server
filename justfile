@@ -70,11 +70,8 @@ raw-vm:
 
 # This job can only be run with ARM emulation enabeled
 pi:
-    nix run github:nix-community/nixos-generators -- \
-        --format raw \
-        --flake .#siriusPI \
-        -o result-pi
+    nix build '.#nixosConfigurations.siriusPI.config.system.build.sdImage' --impure
 
-    sudo cp result-pi/*.img nixos-pi.img
+    sudo cp result/sd-image/*.img nixos-pi.img
     sudo chown $(id -u):$(id -g) nixos-pi.img
     sudo chmod 600 nixos-pi.img

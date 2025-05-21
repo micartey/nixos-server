@@ -45,7 +45,7 @@
         username = "sirius";
         initialPassword = "notnagel"; # The password should only be usable from (VNC) cloud terminal
 
-        hostname = "nixos-server";
+        hostname = "sirius.local";
         domain = "noreply.com";
       };
 
@@ -53,12 +53,6 @@
         system = meta.system;
         config.allowUnfree = true;
         overlays = [ nixgl.overlay ];
-      };
-
-      pkgs-unstable-arm = import nixpkgs-unstable {
-        system = "aarch64-linux"; # No need to load from system
-        config.allowUnfree = true;
-        # overlays = [ nixgl.overlay ];
       };
     in
     {
@@ -120,12 +114,10 @@
         siriusPI = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = {
-            inherit
-              inputs
-              ;
+            inherit inputs;
 
             system = "aarch64-linux";
-            pkgs-unstable = pkgs-unstable-arm;
+            # pkgs-unstable = pkgs-unstable-arm;
 
             meta = meta // {
               system = "aarch64-linux";

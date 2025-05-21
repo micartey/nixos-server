@@ -2,7 +2,6 @@
   lib,
   inputs,
   pkgs,
-  pkgs-unstable,
   meta,
   ...
 }:
@@ -21,7 +20,6 @@
       inherit
         inputs
         pkgs
-        pkgs-unstable
         meta
         ;
     }
