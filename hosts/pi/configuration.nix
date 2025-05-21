@@ -23,7 +23,7 @@ in
 
   nix.settings = {
     # This is needed to allow building remotely
-    trusted-users = [ "daniel" ];
+    trusted-users = [ "daniel" "root" ];
 
     # The nix-community cache has aarch64 builds of unfree packages,
     # which aren't in the normal cache
