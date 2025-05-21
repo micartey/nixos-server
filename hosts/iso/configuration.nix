@@ -1,4 +1,4 @@
-{ modulesPath, system, ... }:
+{ modulesPath, meta, ... }:
 
 let
   # We need the absolute path to the project root for the imports
@@ -21,7 +21,7 @@ in
   # '';
 
   # Is that required? Idk, but it's here
-  nixpkgs.hostPlatform = system;
+  nixpkgs.hostPlatform = meta.system;
 
   # Use serial connection so that we can use the terminal correctly
   boot.kernelParams = [

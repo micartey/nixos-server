@@ -2,7 +2,7 @@
   pkgs,
   lib,
   modulesPath,
-  system,
+  meta,
   ...
 }:
 
@@ -27,7 +27,7 @@ in
   };
 
   # Is that required? Idk, but it's here
-  nixpkgs.hostPlatform = system;
+  nixpkgs.hostPlatform = meta.system;
 
   boot.growPartition = true;
   boot.loader.grub.device = lib.mkDefault "/dev/vda"; # "nodev" for non x86_64-linux

@@ -1,6 +1,6 @@
 {
   modulesPath,
-  system,
+  meta,
   lib,
   ...
 }:
@@ -24,5 +24,5 @@ in
   services.journald.console = "/dev/console";
 
   # Is that required? Idk, but it's here
-  nixpkgs.hostPlatform = system;
+  nixpkgs.hostPlatform = meta.system;
 }
