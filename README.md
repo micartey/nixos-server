@@ -96,10 +96,6 @@ For a more precise guide on how to setup sops, see [here](https://github.com/mic
 
 ## Build Live-ISO file
 
-> [!WARNING]
-> You can build and run the ISO file, however, all changes will be stored in RAM and are not persistent.
-> There is currently no installation process from the iso.
-
 To build an ISO file, run the following command:
 
 ```bash
@@ -204,7 +200,7 @@ Be patient when using that method.
 
 ## Build Raspberry Pi Image
 
-> [!CAUTION]
+> [!WARNING]
 > **This is a WIP**
 >
 > Many features are not usable yet but it boots and you can use docker etc.
