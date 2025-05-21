@@ -232,9 +232,10 @@ Small note: You can quit during _Verify_ as it takes just time and read cycles
 
 ### Build on remote host
 
-Although untested yet, the following snipped should allow you to build any changes on your host and push it to the PI.
+The following snipped allows you to build any changes on your host and push it to the PI.
 That implies it is already in the network (through Ethernet e.g.) and has the `sirius.local` hostname.
 Lastly, you need to add your user to the `trusted-users` in the pi's `configuration.nix`.
+Default tursted users are: `daniel` and `root`
 
 ```bash
 nixos-rebuild switch --flake .#siriusPI --target-host sirius@sirius.local --use-remote-sudo --impure
