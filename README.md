@@ -104,11 +104,6 @@ just iso
 
 ### Run Live-ISO file
 
-> [!NOTE]
-> Edit the `justfile` to change the resources located to the VM.
-> The default configuration is 8 CPUs and 16GB of RAM.
-> Keep in mind that everything is stored in the RAM so you should allocate enough RAM to the VM.
-
 To run the ISO file, run the following command:
 
 ```bash
@@ -120,11 +115,7 @@ just iso-vm
 
 ## Build Raw Images
 
-> [!NOTE]
-> Images can be run on some cloud providers and on all virtualization software.
-> They are persistent and adjust the storage size dynamically.
-
-You can now also build raw and qcow2 images.
+You can also build raw and qcow2 images.
 These images can be used to run the server on a cloud provider.
 Changes are persistent and survive reboots.
 
@@ -208,7 +199,7 @@ Be patient when using that method.
 > The following guide was of big help:
 > https://jcd.pub/2025/01/30/nixos-on-raspi-in-2025/
 
-To even attempt to build this on you current machine, you need to enable arm support on your host:
+To even attempt to build this on you current machine, you need to enable arm support:
 
 ```nix
 boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -226,3 +217,5 @@ sudo just pi
 nix-shell -p caligula
 caligula burn nixos-pi.img
 ```
+
+Small note: You can quit during _Verify_ as it takes just time and read cycles
