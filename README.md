@@ -200,11 +200,11 @@ Be patient when using that method.
 > [!WARNING]
 > **This is a WIP**
 >
-> Many features are not usable yet but it boots and you can use docker etc.
+> Many features are not usable yet, most notably:
 > - gpio
 > - pwm
 > - bluetooth
-> - wifi (need to add nmtui)
+> - wifi
 >
 > The following guide was of big help:
 > https://jcd.pub/2025/01/30/nixos-on-raspi-in-2025/
