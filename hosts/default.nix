@@ -29,5 +29,7 @@
     cargo
     rustc
     nil
+
+    jdk21_headless
   ];
 }

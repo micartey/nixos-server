@@ -2,6 +2,7 @@
   pkgs,
   system,
   modulesPath,
+  inputs,
   lib,
   meta,
   ...
@@ -15,8 +16,11 @@ in
 {
   imports = [
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
+
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
+
     "${PROJECT_ROOT}/hosts/servers/default.nix"
-    "${PROJECT_ROOT}/hosts/pi/avahi.nix"
+    "${PROJECT_ROOT}/hosts/pi/default.nix"
   ];
 
   networking.hostName = lib.mkForce meta.hostname;
@@ -41,14 +45,33 @@ in
   };
 
   # These options make the sd card image build faster
-  boot.supportedFilesystems.zfs = lib.mkForce false;
   sdImage.compressImage = false;
 
-  # Use serial connection so that we can use the terminal correctly
-  boot.kernelParams = [
-    "console=ttyS0,115200"
-    "console=tty1"
+  nixpkgs.overlays = [
+    # Workaround: https://github.com/NixOS/nixpkgs/issues/154163
+    # modprobe: FATAL: Module sun4i-drm not found in directory
+    (final: super: {
+      makeModulesClosure = x:
+        super.makeModulesClosure (x // {allowMissing = true;});
+    })
   ];
+
+  boot = {
+    supportedFilesystems.zfs = lib.mkForce false;
+
+    # kernelPackages = pkgs.linuxPackages_rpi4;
+
+    kernelParams = [
+      "console=ttyS0,115200"
+      "console=tty1"
+    ];
+
+    initrd.availableKernelModules = [
+      "bcm2835_dma" # kernel module for GPIO
+      "i2c_bcm2835" # kernel module for HAT
+      "vc4" # for GPU
+    ];
+  };
 
   environment.systemPackages = with pkgs; [
     libraspberrypi
