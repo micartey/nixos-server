@@ -7,11 +7,16 @@
     ./fonts.nix
     ./shell.nix
     ./users.nix
-    ./traceroute.nix
 
     ../modules/dns/cloudflare.nix
+
+    ../modules/network/traceroute.nix
+    ../modules/network/tailgate.nix
+
     ../modules/nixos/home-manager.nix
+
     ../modules/security/sops.nix
+
     ../modules/nixos/nix.nix
     ../modules/catppuccin.nix
     ../modules/docker.nix
