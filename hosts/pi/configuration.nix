@@ -2,7 +2,6 @@
   pkgs,
   system,
   modulesPath,
-  inputs,
   lib,
   meta,
   ...
@@ -16,9 +15,6 @@ in
 {
   imports = [
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
-
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
-
     "${PROJECT_ROOT}/hosts/servers/default.nix"
     "${PROJECT_ROOT}/hosts/pi/default.nix"
   ];
@@ -46,15 +42,6 @@ in
 
   # These options make the sd card image build faster
   sdImage.compressImage = false;
-
-  nixpkgs.overlays = [
-    # Workaround: https://github.com/NixOS/nixpkgs/issues/154163
-    # modprobe: FATAL: Module sun4i-drm not found in directory
-    (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // {allowMissing = true;});
-    })
-  ];
 
   boot = {
     supportedFilesystems.zfs = lib.mkForce false;
