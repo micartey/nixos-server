@@ -204,7 +204,6 @@ Be patient when using that method.
 > - gpio
 > - pwm
 > - bluetooth
-> - wifi
 >
 > The following guide was of big help:
 > https://jcd.pub/2025/01/30/nixos-on-raspi-in-2025/
