@@ -16,15 +16,26 @@ iso:
     sudo cp result/iso/*.iso nixos.iso
 
 iso-vm:
+    # Remove old files
+    rm -rf traffic.pcap
+    rm -rf audit.log
+
     qemu-system-x86_64 \
         -enable-kvm \
         -m 16G \
+        -cpu host \
         -smp cores=8 \
         -cdrom nixos.iso \
         -boot d \
+        -monitor none \
         -nographic \
         -netdev user,id=net0 \
-        -device virtio-net-pci,netdev=net0
+        -device virtio-net-pci,netdev=net0 \
+        -object filter-dump,id=dump0,netdev=net0,file=traffic.pcap \
+        -chardev stdio,id=moncon,signal=off \
+        -serial chardev:moncon \
+        -serial file:audit.log
+
 
 qcow:
     nix run github:nix-community/nixos-generators -- \
@@ -37,8 +48,9 @@ qcow:
     sudo chmod 600 nixos.qcow2
 
 qcow-vm:
-    # Remove old pcap file
+    # Remove old pcap files
     rm -rf traffic.pcap
+    rm -rf audit.log
 
     qemu-system-x86_64 \
       -enable-kvm \
