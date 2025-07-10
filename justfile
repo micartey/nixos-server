@@ -37,6 +37,9 @@ qcow:
     sudo chmod 600 nixos.qcow2
 
 qcow-vm:
+    # Remove old pcap file
+    rm -rf traffic.pcap
+
     qemu-system-x86_64 \
       -enable-kvm \
       -m 16G \
@@ -70,8 +73,8 @@ raw-vm:
       -device virtio-net-pci,netdev=net0
 
 # This job can be used to inspect the live traffic of qcow vm
-wireshark:
-    tail -F -c +1 your_file.pcap | wireshark -k -i -
+wireshark-qcow-vm:
+    tail -F -c +1 traffic.pcap | wireshark -k -i -
 
 # This job can only be run with ARM emulation enabeled
 pi:
