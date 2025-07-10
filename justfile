@@ -45,7 +45,8 @@ qcow-vm:
       -boot c \
       -nographic \
       -netdev user,id=net0 \
-      -device virtio-net-pci,netdev=net0
+      -device virtio-net-pci,netdev=net0 \
+      -object filter-dump,id=dump0,netdev=net0,file=traffic.pcap
 
 raw:
     nix run github:nix-community/nixos-generators -- \
@@ -67,6 +68,10 @@ raw-vm:
       -nographic \
       -netdev user,id=net0 \
       -device virtio-net-pci,netdev=net0
+
+# This job can be used to inspect the live traffic of qcow vm
+wireshark:
+    tail -F -c +1 your_file.pcap | wireshark -k -i -
 
 # This job can only be run with ARM emulation enabeled
 pi:
