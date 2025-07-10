@@ -90,7 +90,7 @@ raw-vm:
       -device virtio-net-pci,netdev=net0
 
 # This job can be used to inspect the live traffic of qcow vm
-wireshark-qcow-vm:
+wireshark:
     tail -F -c +1 traffic.pcap | wireshark -k -i -
 
 # This job can only be run with ARM emulation enabeled

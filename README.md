@@ -13,13 +13,14 @@
 - [Build Raw Images](#build-raw-images)
 - [Build Docker Image](#build-docker-image)
 - [Build Raspberry Pi Image](#build-raspberry-pi-image)
-- [Use as analysis machine](#use-as-analysis-machine)
 
 ## Introduction
 
 This repository serves as a template for NixOS server configurations.
 It can either be directly used by cloning and installing it on a server, or by building and using images and deploy them on e.g. AWS.
 Alternatively, you can also build an live-ISO file and run it as a temporary playground or use the images for persistant VMs.
+
+Lastly, you can start a vm of the live-ISO or qcow-Image and use the vm to analyze untrusted software by sniffing to the network and os executions.
 
 ### Pre-configured users
 
@@ -241,12 +242,3 @@ Default tursted users are: `daniel` and `root`
 ```bash
 nixos-rebuild switch --flake .#siriusPI --target-host sirius@sirius.local --use-remote-sudo --impure
 ```
-
-## Use as analysis machine
-
-As you can generate and start virtuel machines, it only makes sense to use it as well for testing new software.
-This is possible with the `qcow` or `iso` vm.
-You probably want to use the iso vm as all the changes will be discarded, unlike with qcow.
-
-The vm automatically create `traffic.pcap` and `audit.log` files which are usable for logging network traffic and executions.
-To analyze the network traffic, you can also start the `wireshark-qcow-vm` job which will show live traffic.
