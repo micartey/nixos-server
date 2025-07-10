@@ -245,7 +245,8 @@ nixos-rebuild switch --flake .#siriusPI --target-host sirius@sirius.local --use-
 ## Use as analysis machine
 
 As you can generate and start virtuel machines, it only makes sense to use it as well for testing new software.
-This is possible with the `qcow` vm.
+This is possible with the `qcow` or `iso` vm.
+You probably want to use the iso vm as all the changes will be discarded, unlike with qcow.
 
 The vm automatically create `traffic.pcap` and `audit.log` files which are usable for logging network traffic and executions.
 To analyze the network traffic, you can also start the `wireshark-qcow-vm` job which will show live traffic.
