@@ -7,4 +7,6 @@ result*
 *.iso
 *.img
 *.tar.xz
+
 *.pcap
+*.log

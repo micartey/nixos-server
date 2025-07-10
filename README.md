@@ -13,6 +13,7 @@
 - [Build Raw Images](#build-raw-images)
 - [Build Docker Image](#build-docker-image)
 - [Build Raspberry Pi Image](#build-raspberry-pi-image)
+- [Use as analysis machine](#use-as-analysis-machine)
 
 ## Introduction
 
@@ -41,6 +42,7 @@ Make sure to [add a public key](#add-a-public-key).
 - oh-my-posh
 - git, gh
 - eza, bat, btop, fastfetch, fzf, ripgrep, yazi, zip, unzip, tree, just
+- auditd
 
 ## Setup
 
@@ -239,3 +241,11 @@ Default tursted users are: `daniel` and `root`
 ```bash
 nixos-rebuild switch --flake .#siriusPI --target-host sirius@sirius.local --use-remote-sudo --impure
 ```
+
+## Use as analysis machine
+
+As you can generate and start virtuel machines, it only makes sense to use it as well for testing new software.
+This is possible with the `qcow` vm.
+
+The vm automatically create `traffic.pcap` and `audit.log` files which are usable for logging network traffic and executions.
+To analyze the network traffic, you can also start the `wireshark-qcow-vm` job which will show live traffic.

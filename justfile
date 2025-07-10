@@ -43,13 +43,18 @@ qcow-vm:
     qemu-system-x86_64 \
       -enable-kvm \
       -m 16G \
+      -cpu host \
+      -device ahci,id=ahci \
       -smp cores=8 \
       -drive file=nixos.qcow2,if=virtio,format=qcow2 \
       -boot c \
+      -monitor none \
       -nographic \
       -netdev user,id=net0 \
-      -device virtio-net-pci,netdev=net0 \
-      -object filter-dump,id=dump0,netdev=net0,file=traffic.pcap
+      -device virtio-net-pci,netdev=net0,mac=A4:BB:6D:C0:FF:EE \
+      -object filter-dump,id=dump0,netdev=net0,file=traffic.pcap \
+      -chardev stdio,id=moncon,signal=off \
+      -serial chardev:moncon
 
 raw:
     nix run github:nix-community/nixos-generators -- \

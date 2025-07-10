@@ -15,6 +15,7 @@
 
     ../modules/nixos/home-manager.nix
 
+    ../modules/security/audit.nix
     ../modules/security/sops.nix
 
     ../modules/nixos/nix.nix
