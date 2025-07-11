@@ -8,11 +8,12 @@
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
 
-    initExtra = ''
-      if [[ $(id -u) -eq 1001 && $(pwd) == "/home/nixos" ]]; then
-          cd ~
-      fi
-    '';
+    initExtra = # bash
+      ''
+        if [[ $(id -u) -eq 1001 && $(pwd) == "/home/nixos" ]]; then
+            cd ~
+        fi
+      '';
   };
 
   programs.bash = {

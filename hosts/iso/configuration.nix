@@ -33,23 +33,4 @@ in
     "console=ttyS0,115200"
     "console=tty1"
   ];
-
-  systemd.services.audit-log-to-serial = {
-    description = "Forward audit.log to serial port ttyS1";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "auditd.service" ];
-
-    serviceConfig = {
-      ExecStart = "${pkgs.coreutils}/bin/tail -f /var/log/audit/audit.log";
-
-      StandardOutput = "tty";
-      TTYPath = "/dev/ttyS1";
-
-      User = "root";
-      Group = "root";
-
-      # It will fiale if ttyS1 is not present and if that happens we don't want retries
-      Restart = "no";
-    };
-  };
 }
