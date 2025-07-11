@@ -15,11 +15,7 @@ iso:
 
     sudo cp result/iso/*.iso nixos.iso
 
-iso-vm:
-    # Remove old files
-    rm -rf traffic.pcap
-    rm -rf audit.log
-
+iso-vm: cleanup
     qemu-system-x86_64 \
         -enable-kvm \
         -m 16G \
@@ -47,11 +43,7 @@ qcow:
     sudo chown $(id -u):$(id -g) nixos.qcow2
     sudo chmod 600 nixos.qcow2
 
-qcow-vm:
-    # Remove old pcap files
-    rm -rf traffic.pcap
-    rm -rf audit.log
-
+qcow-vm: cleanup
     qemu-system-x86_64 \
       -enable-kvm \
       -m 16G \
@@ -89,10 +81,6 @@ raw-vm:
       -netdev user,id=net0 \
       -device virtio-net-pci,netdev=net0
 
-# This job can be used to inspect the live traffic of qcow vm
-wireshark:
-    tail -F -c +1 traffic.pcap | wireshark -k -i -
-
 # This job can only be run with ARM emulation enabeled
 pi:
     nix build '.#nixosConfigurations.siriusPI.config.system.build.sdImage' --impure
@@ -100,3 +88,12 @@ pi:
     sudo cp result/sd-image/*.img nixos-pi.img
     sudo chown $(id -u):$(id -g) nixos-pi.img
     sudo chmod 600 nixos-pi.img
+
+
+
+# This job can be used to inspect the live traffic of qcow vm
+wireshark:
+    tail -F -c +1 traffic.pcap | wireshark -k -i -
+
+cleanup:
+    rm -rf *.log *.pcap
