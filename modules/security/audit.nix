@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
-  security.auditd.enable = true;
-  security.audit.enable = true;
+  security.auditd.enable = lib.mkDefault true;
+  security.audit.enable = lib.mkDefault true;
   security.audit.rules = [
     "-a exit,always -F arch=b64 -S execve"
   ];
