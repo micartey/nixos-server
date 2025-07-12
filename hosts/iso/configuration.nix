@@ -1,7 +1,6 @@
 {
   modulesPath,
   meta,
-  pkgs,
   ...
 }:
 
