@@ -96,6 +96,18 @@
           modules = [ ./hosts/img/configuration.nix ];
         };
 
+        siriusHyperV = nixpkgs.lib.nixosSystem {
+          system = meta.system;
+          specialArgs = {
+            inherit
+              inputs
+              pkgs-unstable
+              meta
+              ;
+          };
+          modules = [ ./hosts/hyperv/configuration.nix ];
+        };
+
         siriusDocker = nixpkgs.lib.nixosSystem {
           system = meta.system;
           specialArgs = {
