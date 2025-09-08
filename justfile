@@ -15,6 +15,13 @@ iso:
 
     sudo cp result/iso/*.iso nixos.iso
 
+hyperv:
+    nix run github:nix-community/nixos-generators -- \
+        --format hyperv \
+        --flake .#siriusHyperV \
+        --disk-size 8G \
+        -o result
+
 iso-vm: cleanup
     qemu-system-x86_64 \
         -enable-kvm \
