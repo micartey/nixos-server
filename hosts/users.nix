@@ -16,9 +16,24 @@
           "wheel"
           "docker"
           "wireshark"
-          "gpio" # Only useful for pi
+          "gpio"
         ];
         openssh.authorizedKeys.keys = [ (builtins.readFile ../dots/ssh/id_ed25519.pub) ];
+      };
+
+      # This is a non-sudo user that is meant to run services and applications
+      # that should not have access to sudo
+      keos = {
+        isNormalUser = true;
+        description = "keos";
+        initialPassword = meta.initialPassword;
+        extraGroups = [
+          "docker"
+          "wireshark"
+        ];
+        openssh.authorizedKeys.keys = [
+          (builtins.readFile ../dots/ssh/id_ed25519.pub)
+        ];
       };
     };
   };

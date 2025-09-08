@@ -25,6 +25,26 @@
     }
   );
 
+  home-manager.users.root = lib.mkDefault (
+    import ../../home/headless {
+      inherit
+        inputs
+        pkgs
+        meta
+        ;
+    }
+  );
+
+  home-manager.users.keos = lib.mkDefault (
+    import ../../home/headless {
+      inherit
+        inputs
+        pkgs
+        meta
+        ;
+    }
+  );
+
   security.sudo = {
     enable = true;
     extraConfig = ''
