@@ -63,6 +63,8 @@ in
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom
+    gpio-utils
+    libgpiod
   ];
 
   hardware.enableRedistributableFirmware = true;
