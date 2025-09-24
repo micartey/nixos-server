@@ -17,6 +17,7 @@ in
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
     "${PROJECT_ROOT}/hosts/servers/default.nix"
     "${PROJECT_ROOT}/hosts/pi/default.nix"
+    "${PROJECT_ROOT}/hosts/pi/sd-image.nix"
   ];
 
   networking.hostName = lib.mkForce meta.hostname;
@@ -39,9 +40,6 @@ in
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
-
-  # These options make the sd card image build faster
-  sdImage.compressImage = false;
 
   boot = {
     supportedFilesystems.zfs = lib.mkForce false;
@@ -67,7 +65,38 @@ in
     libgpiod
   ];
 
-  hardware.enableRedistributableFirmware = true;
+  hardware = {
+    enableRedistributableFirmware = lib.mkForce false;
+    firmware = [ pkgs.raspberrypiWirelessFirmware ];
+    i2c.enable = true;
+
+    deviceTree = {
+      enable = true;
+      kernelPackage = pkgs.linuxKernel.rpiPackages.linux_rpi4.kernel;
+      filter = "*2711*";
+
+      overlays = [
+
+      ];
+    };
+  };
+
+  sdImage = {
+    # Skip compression for faster build speed
+    compressImage = false;
+    imageName = "nixos-pi.img";
+
+    extraFirmwareConfig = {
+      # Enable imx219 camera
+      camera_auto_detect = 0;
+      dtoverlay = "imx219"; # or omv7251
+      dtparqm = "i2c_vc=on";
+      disable_fw_kms_setup = 1;
+      # cma = 512;
+      # gpu_mem = 128;
+      # i2c_addr=0x0c # (default and thus not needed)
+    };
+  };
 
   security.sudo.wheelNeedsPassword = false;
 
