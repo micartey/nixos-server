@@ -154,7 +154,6 @@ just qcow-vm
 > Furthermore, containers created from this image need to be run in privileged mode which is a security risk.
 
 It is also possible to create a docker image.
-However, there is a lot of overhead and docker in docker e.g. doesn't work out of the box.
 For the sake of completeness, here is how to create a docker image:
 
 ```bash
@@ -167,31 +166,25 @@ nix run github:nix-community/nixos-generators -- \
 sudo cp result/tarball/*.tar.xz nixos.tar.xz
 ```
 
-Before you can do anything meaningful, you should remove the following files.
-This step is not necessary as it would also spin to life without it, however, some of these features are obsolete or not working at all.
-
-- /modules/docker.nix
-- /modules/catppuccin.nix
-- /modules/dns
-- /home/git.nix
-- /hosts/fonts.nix
-- /hosts/shell.nix
-- /hosts/i18n.nix
-- ...
-
 ### Run Docker Image
 
 ```bash
 docker import nixos.tar.xz nixos-server:latest
-docker run --privileged -it -p 2222:22 --rm nixos-server:latest /init
+
+# Start in background with SSH over port 2222
+docker run --privileged -d -p 2222:22 --rm nixos-server:latest /init
+
+# Start in background
+docker run --privileged -d --rm nixos-server:latest /init
 ```
 
 You can connect to the docker container via one of the following methods:
 
 ```bash
+# Connect via bash
 docker exec -it $(docker ps | grep nixos-server:latest | awk '{ print $1 }') /run/current-system/sw/bin/bash
 
-# SSH requires one to open the port 22
+# SSH requires one to open the port 22 -> 2222
 ssh -o StrictHostKeychecking=no -p 2222 sirius@localhost
 ```
 

@@ -10,7 +10,7 @@
     ./shell.nix
     ./git.nix
 
-    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
   ];
 
   programs.home-manager.enable = true;

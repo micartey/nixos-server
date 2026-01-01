@@ -25,7 +25,7 @@ hyperv:
 iso-vm: cleanup
     qemu-system-x86_64 \
         -enable-kvm \
-        -m 16G \
+        -m 32G \
         -cpu host \
         -smp cores=8 \
         -cdrom nixos.iso \
@@ -38,7 +38,6 @@ iso-vm: cleanup
         -chardev stdio,id=moncon,signal=off \
         -serial chardev:moncon \
         -serial file:audit.log
-
 
 qcow:
     nix run github:nix-community/nixos-generators -- \
@@ -95,8 +94,6 @@ pi:
     sudo cp result/sd-image/*.img nixos-pi.img
     sudo chown $(id -u):$(id -g) nixos-pi.img
     sudo chmod 600 nixos-pi.img
-
-
 
 # This job can be used to inspect the live traffic of qcow vm
 wireshark:

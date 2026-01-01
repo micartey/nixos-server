@@ -8,7 +8,19 @@
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
 
-    initExtra = # bash
+    shellAliases = {
+      s = "nix-shell --run zsh -p";
+
+      "?" = "opencode run";
+
+      # git alias
+      gp = "git push";
+      gc = "git commit";
+      ga = "git add";
+      gs = "git status";
+    };
+
+    initContent = # bash
       ''
         if [[ $(id -u) -eq 1001 && $(pwd) == "/home/nixos" ]]; then
             cd ~

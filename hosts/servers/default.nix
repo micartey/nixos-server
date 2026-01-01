@@ -16,7 +16,7 @@
   ];
 
   home-manager.users.${meta.username} = lib.mkDefault (
-    import ../../home/headless {
+    import ../../home-manager/headless {
       inherit
         inputs
         pkgs
@@ -26,7 +26,7 @@
   );
 
   home-manager.users.root = lib.mkDefault (
-    import ../../home/headless {
+    import ../../home-manager/headless {
       inherit
         inputs
         pkgs
@@ -36,7 +36,7 @@
   );
 
   home-manager.users.keos = lib.mkDefault (
-    import ../../home/headless {
+    import ../../home-manager/headless {
       inherit
         inputs
         pkgs
