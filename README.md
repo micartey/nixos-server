@@ -12,6 +12,7 @@
 - [Build Live-ISO file](#build-live-iso-file)
 - [Build Raw Images](#build-raw-images)
 - [Build Docker Image](#build-docker-image)
+- [Build WSL Image](#build-wsl-image)
 - [Build Raspberry Pi Image](#build-raspberry-pi-image)
 
 ## Introduction
@@ -28,6 +29,7 @@ The pre-configured users all have no password and can only be accessed via SSH.
 Make sure to [add a public key](#add-a-public-key).
 
 - sirius (default user)
+- keos (non-sudoers user)
 - root
 
 ### Pre-configured packages
@@ -43,7 +45,7 @@ Make sure to [add a public key](#add-a-public-key).
 - oh-my-posh
 - git, gh
 - eza, bat, btop, fastfetch, fzf, ripgrep, yazi, zip, unzip, tree, just
-- auditd
+- auditd (for virtual machines)
 
 ## Setup
 
@@ -78,12 +80,32 @@ I added my own public key as a placeholder - **you should remove it**
 
 ### Configure DNS
 
-The DNS is configured in `/modules/dns/cloudflare.nix` and registered in `/hosts/default.nix`.
-Cloudflare uses the following IPv4 addresses:
+The DNS is configured in `/modules/network/dns.nix` and registered in `/hosts/default.nix`.
+Cloudflare-DNS uses the following IPv4 addresses:
 
 ```plaintext
 1.1.1.1
 1.0.0.1
+```
+
+### Configure Proxy
+
+Although not present, for the sake of completeness, here is also an example on how you could configure a proxy.
+This might be very usefull when creating e.g. a docker or wsl image in the context of companies that restrict internet access. 
+
+```nix
+{ ... }:
+
+{
+   networking.proxy.default = "http://user:password@proxy.example.com:8080";
+
+  # Optional: specific protocols if they differ from the default
+  # networking.proxy.http = "http://proxy.example.com:8080";
+  # networking.proxy.https = "http://proxy.example.com:8080";
+
+  # Hosts to exclude from proxying
+  networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+}
 ```
 
 ### Configure Traefik
@@ -147,12 +169,6 @@ just qcow-vm
 
 ## Build Docker Image
 
-> [!WARNING]
-> Docker images of this kind should never be used for containers.
-> Containers are meant to be small, lightweight and modular which also means one container per service.
-> An entire OS in a container is a bad practice and should be avoided.
-> Furthermore, containers created from this image need to be run in privileged mode which is a security risk.
-
 It is also possible to create a docker image.
 For the sake of completeness, here is how to create a docker image:
 
@@ -191,15 +207,22 @@ ssh -o StrictHostKeychecking=no -p 2222 sirius@localhost
 SSH might take a few tens of seconds to start up.
 Be patient when using that method.
 
+## Build WSL Image
+
+```bash
+sudo just wsl
+```
+
+This will create a `.wsl` file which you can simply import and run with a double-click.
+Pre-configured with proxy, dns and everything you need!
+
 ## Build Raspberry Pi Image
 
 > [!WARNING]
 > **This is a WIP**
 >
-> Many features are not usable yet, most notably:
-> - gpio
-> - pwm
-> - bluetooth
+> Pretty much nothing outside of running the operating system.
+> So this is pretty much usefull only for servers and simple peripherals e.g. HDMI or USB
 >
 > The following guide was of big help:
 > https://jcd.pub/2025/01/30/nixos-on-raspi-in-2025/

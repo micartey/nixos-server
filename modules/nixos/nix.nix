@@ -5,7 +5,7 @@
 }:
 
 {
-  system.stateVersion = meta.nixos-version;
+  # system.stateVersion = meta.nixos-version;
 
   nix.settings = {
     experimental-features = [

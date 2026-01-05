@@ -1,11 +1,8 @@
 default:
     @just --list
 
-sirius:
-    nixos-rebuild switch --flake .#sirius
-
 update:
-    nix flake update
+    nixos-rebuild switch --flake .#sirius
 
 iso:
     nix run github:nix-community/nixos-generators -- \
@@ -15,12 +12,9 @@ iso:
 
     sudo cp result/iso/*.iso nixos.iso
 
-hyperv:
-    nix run github:nix-community/nixos-generators -- \
-        --format hyperv \
-        --flake .#siriusHyperV \
-        --disk-size 8G \
-        -o result
+wsl:
+    nix build .#nixosConfigurations.siriusWsl.config.system.build.tarballBuilder
+    sudo ./result/bin/nixos-wsl-tarball-builder
 
 iso-vm: cleanup
     qemu-system-x86_64 \

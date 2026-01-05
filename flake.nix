@@ -26,6 +26,10 @@
       url = "github:NixOS/nixos-hardware";
     };
 
+    # Add the nixos-wsl input
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+
     opencode.url = "github:sst/opencode";
     rime.url = "github:lukasl-dev/rime";
 
@@ -38,6 +42,7 @@
       nixpkgs,
       nixpkgs-unstable,
       nixgl,
+      nixos-wsl,
       ...
     }@inputs:
     let
@@ -99,7 +104,7 @@
           modules = [ ./hosts/img/configuration.nix ];
         };
 
-        siriusHyperV = nixpkgs.lib.nixosSystem {
+        siriusWsl = nixpkgs.lib.nixosSystem {
           system = meta.system;
           specialArgs = {
             inherit
@@ -108,8 +113,13 @@
               meta
               ;
           };
-          modules = [ ./hosts/hyperv/configuration.nix ];
+
+          modules = [
+            nixos-wsl.nixosModules.wsl
+            ./hosts/wsl/configuration.nix
+          ];
         };
+
 
         siriusDocker = nixpkgs.lib.nixosSystem {
           system = meta.system;
